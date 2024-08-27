@@ -1,0 +1,32 @@
+{
+  "name": "express-crud-knex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "mysql2": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knex": "knex --knexfile=src/knexFile.ts",
+    "seed": "yarn knex seed:run --verbose",
+    "migrate": "yarn knex migrate:latest --verbose",
+    "rollback": "yarn knex migrate:rollback --verbose",
+    "make:seeder": "yarn knex seed:make",
+    "make:migration": "yarn knex migrate:make"
+  }
+}
