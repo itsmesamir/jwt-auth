@@ -9,7 +9,7 @@ import db from "../knex.js";
  */
 export const getUsers = async (req, res) => {
   try {
-    const users = await db("userss").select("*");
+    const users = await db("users").select("*");
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });

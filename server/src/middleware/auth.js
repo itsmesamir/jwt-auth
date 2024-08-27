@@ -7,12 +7,16 @@ const authenticateToken = (req, res, next) => {
 
   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
-    if (err) return res.sendStatus(403);
+  jwt.verify(
+    token,
+    process.env.ACCESS_TOKEN_SECRET || "secret",
+    async (err, user) => {
+      if (err) return res.sendStatus(403);
 
-    req.user = await db("users").where({ id: user.id }).first();
-    next();
-  });
+      req.user = await db("users").where({ id: user.id }).first();
+      next();
+    }
+  );
 };
 
 export const generateAccessToken = (user) => {

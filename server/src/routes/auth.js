@@ -29,7 +29,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   const { username: email, password } = req.body;
 
   try {
@@ -45,7 +45,10 @@ router.post("/login", async (req, res) => {
     res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
     res.json({ accessToken });
   } catch (error) {
-    res.status(500).json({ error });
+    console.log(error);
+    // i do have a error handling middleware in place
+    // but i still want to catch the error here and send it to the client
+    next(error);
   }
 });
 

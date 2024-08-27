@@ -1,43 +1,29 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import { useContext } from "react";
-import AuthContext, { AuthProvider } from "./context/AuthContext";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
-import "./index.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Register from "./components/Auth/Register";
+import Login from "./components/Auth/Login";
+import PrivateRoute from "./components/Auth/PrivateRoute";
 
-const App = () => {
-  const { user } = useContext(AuthContext);
-
+function App() {
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/register"
-          element={!user ? <Register /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/"
-          element={user ? <Dashboard /> : <Navigate to="/login" />}
-        />
-      </Routes>
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={<PrivateRoute element={<Dashboard />} />}
+          />
+        </Routes>
+      </div>
     </Router>
   );
-};
+}
 
-const AppWrapper = () => (
-  <AuthProvider>
-    <App />
-  </AuthProvider>
-);
-
-export default AppWrapper;
+export default App;
